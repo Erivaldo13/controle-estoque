@@ -8,11 +8,10 @@
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0">
 
-<title>Controle de Estoque ES - Leitor QR Code</title>
+<title>Controle de Estoque ES</title>
 
 <script
-src="https://unpkg.com/html5-qrcode"
-type="text/javascript">
+src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
 </script>
 
 <style>
@@ -24,54 +23,30 @@ type="text/javascript">
 body {
 
   margin: 0;
-
-  padding: 20px;
+  padding: 15px;
 
   font-family: Arial, sans-serif;
 
   background: #f2f2f2;
 
-  color: #222;
-
 }
 
 .container {
 
+  width: 100%;
   max-width: 500px;
 
   margin: auto;
 
 }
 
-.titulo {
+h1 {
 
   text-align: center;
 
+  font-size: 24px;
+
   margin-bottom: 20px;
-
-}
-
-.logo {
-
-  font-size: 42px;
-
-  margin-bottom: 5px;
-
-}
-
-.titulo h1 {
-
-  margin: 0;
-
-  font-size: 26px;
-
-}
-
-.titulo p {
-
-  color: #666;
-
-  margin-top: 8px;
 
 }
 
@@ -81,9 +56,119 @@ body {
 
   padding: 20px;
 
-  border-radius: 14px;
+  border-radius: 12px;
 
-  box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+  box-shadow:
+    0 2px 8px rgba(0,0,0,0.15);
+
+  margin-bottom: 15px;
+
+}
+
+label {
+
+  display: block;
+
+  font-weight: bold;
+
+  margin-top: 12px;
+
+  margin-bottom: 5px;
+
+}
+
+input,
+select {
+
+  width: 100%;
+
+  padding: 13px;
+
+  border: 1px solid #ccc;
+
+  border-radius: 8px;
+
+  font-size: 16px;
+
+}
+
+button {
+
+  width: 100%;
+
+  padding: 14px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  font-size: 16px;
+
+  font-weight: bold;
+
+  margin-top: 10px;
+
+  cursor: pointer;
+
+}
+
+.btn-camera {
+
+  background: #333;
+
+  color: white;
+
+}
+
+.btn-fechar {
+
+  background: #777;
+
+  color: white;
+
+  display: none;
+
+}
+
+.btn-consultar {
+
+  background: #555;
+
+  color: white;
+
+}
+
+.btn-registrar {
+
+  background: #1976d2;
+
+  color: white;
+
+  font-size: 18px;
+
+}
+
+.produto {
+
+  background: #f5f5f5;
+
+  padding: 15px;
+
+  border-radius: 8px;
+
+  margin-top: 12px;
+
+}
+
+.estoque {
+
+  font-size: 28px;
+
+  font-weight: bold;
+
+  text-align: center;
+
+  margin: 15px 0;
 
 }
 
@@ -91,113 +176,55 @@ body {
 
   width: 100%;
 
-  border-radius: 12px;
+  margin-top: 15px;
 
   overflow: hidden;
 
-  background: #111;
-
-  display: none;
+  border-radius: 8px;
 
 }
 
-.status {
-
-  margin-top: 15px;
-
-  padding: 13px;
-
-  border-radius: 8px;
-
-  background: #f1f1f1;
+.status-camera {
 
   text-align: center;
 
-  font-weight: bold;
+  font-size: 14px;
+
+  margin-top: 10px;
+
+  color: #555;
+
+}
+
+.mensagem {
+
+  padding: 12px;
+
+  border-radius: 8px;
+
+  margin-top: 15px;
+
+  white-space: pre-line;
+
+  background: #eef3f8;
+
+  display: none;
 
 }
 
 .sucesso {
 
-  background: #dff5e4;
+  background: #d9f2df;
 
-  color: #146c2e;
+  color: #155724;
 
 }
 
 .erro {
 
-  background: #ffe0e0;
+  background: #f8d7da;
 
-  color: #9b1c1c;
-
-}
-
-.botao {
-
-  width: 100%;
-
-  padding: 16px;
-
-  margin-top: 15px;
-
-  border: none;
-
-  border-radius: 9px;
-
-  background: #1976d2;
-
-  color: white;
-
-  font-size: 17px;
-
-  font-weight: bold;
-
-  cursor: pointer;
-
-}
-
-.botao:active {
-
-  transform: scale(0.98);
-
-}
-
-.botao-secundario {
-
-  background: #444;
-
-}
-
-.resultado {
-
-  margin-top: 15px;
-
-  padding: 15px;
-
-  background: #f5f5f5;
-
-  border-radius: 8px;
-
-  text-align: center;
-
-  font-size: 20px;
-
-  font-weight: bold;
-
-  display: none;
-
-}
-
-.instrucoes {
-
-  margin-top: 20px;
-
-  font-size: 14px;
-
-  color: #555;
-
-  line-height: 1.5;
+  color: #721c24;
 
 }
 
@@ -210,597 +237,336 @@ body {
 
 <div class="container">
 
-  <div class="titulo">
-
-    <div class="logo">📦</div>
-
-    <h1>CONTROLE DE ESTOQUE ES</h1>
-
-    <p>Leitor de QR Code</p>
-
-  </div>
+<h1>📦 CONTROLE DE ESTOQUE</h1>
 
 
-  <div class="card">
+<div class="card">
 
-    <button
-      id="btnIniciar"
-      class="botao"
-      onclick="iniciarLeitura()">
+<button
+class="btn-camera"
+type="button"
+onclick="abrirCamera()">
 
-      📷 LER QR CODE
+📷 LER QR CODE
 
-    </button>
-
-
-    <div id="reader"></div>
+</button>
 
 
-    <div id="status" class="status">
+<button
+id="btnFecharCamera"
+class="btn-fechar"
+type="button"
+onclick="fecharCamera()">
 
-      Clique em "LER QR CODE" para iniciar a câmera.
+✖ FECHAR CÂMERA
 
-    </div>
-
-
-    <div id="resultado" class="resultado">
-
-      SKU: <span id="skuLido"></span>
-
-    </div>
+</button>
 
 
-    <button
-      id="btnParar"
-      class="botao botao-secundario"
-      onclick="pararLeitura()"
-      style="display:none;">
-
-      ⛔ PARAR CÂMERA
-
-    </button>
+<div
+id="statusCamera"
+class="status-camera">
+</div>
 
 
-    <div class="instrucoes">
+<div id="reader"></div>
 
-      <strong>Como utilizar:</strong>
 
-      <br><br>
+<label>SKU</label>
 
-      1. Clique em <strong>LER QR CODE</strong>.
+<input
+type="text"
+id="sku"
+placeholder="Digite ou leia o QR Code">
 
-      <br>
 
-      2. Quando o navegador solicitar,
-      permita o acesso à câmera.
+<button
+class="btn-consultar"
+type="button"
+onclick="buscarProduto()">
 
-      <br>
+🔎 CONSULTAR PRODUTO
 
-      3. Aponte a câmera para o QR Code do produto.
+</button>
 
-      <br>
 
-      4. Aguarde a leitura.
+<div
+id="produto"
+class="produto">
 
-      <br>
+Produto não selecionado
 
-      5. O sistema enviará automaticamente
-      o SKU para o Controle de Estoque.
+</div>
 
-    </div>
 
-  </div>
+<div
+id="estoque"
+class="estoque">
+
+Estoque: -
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<label>Tipo de movimentação</label>
+
+<select id="tipo">
+
+<option value="">
+Selecione
+</option>
+
+<option value="Entrada">
+📥 ENTRADA
+</option>
+
+<option value="Saída">
+📤 SAÍDA
+</option>
+
+</select>
+
+
+<label>Quantidade</label>
+
+<input
+type="number"
+id="quantidade"
+min="1"
+step="1"
+placeholder="Digite a quantidade">
+
+
+<label>Operador</label>
+
+<input
+type="text"
+id="operador"
+placeholder="Nome do operador">
+
+
+<label>Observação</label>
+
+<input
+type="text"
+id="observacao"
+placeholder="Opcional">
+
+
+<button
+class="btn-registrar"
+type="button"
+onclick="registrar()">
+
+✅ REGISTRAR MOVIMENTAÇÃO
+
+</button>
+
+
+<div
+id="mensagem"
+class="mensagem">
+</div>
+
+</div>
+
+
+<div
+style="
+text-align:center;
+font-size:12px;
+color:#777;
+margin-top:10px;
+">
+
+Controle de Estoque ES
+
+</div>
 
 </div>
 
 
 <script>
 
+/* ============================================================
+   CONFIGURAÇÃO
+============================================================ */
 
-/*
-==================================================
-URL DO GOOGLE APPS SCRIPT
-==================================================
-*/
+const API_URL =
+'https://script.google.com/macros/s/AKfycbyr8totSfl37plsMrhtx6ubUVL3DzBM5hMovFWfoUhZAeNuaItDLoSWNqnUCAYYK5TSAw/exec';
 
-const URL_SISTEMA =
-"https://script.google.com/macros/s/AKfycbyr8totSfl37plsMrhtx6ubUVL3DzBM5hMovFWfoUhZAeNuaItDLoSWNqnUCAYYK5TSAw/exec";
 
+let produtoAtual = null;
 
-let leitor = null;
+let scannerQR = null;
 
-let lendo = false;
+let processandoQR = false;
 
 
-/*
-==================================================
-STATUS
-==================================================
-*/
+/* ============================================================
+   JSONP
+============================================================ */
 
-function mostrarStatus(mensagem, classe = "") {
+function chamarAPI(acao, parametros = {}) {
 
-  const status =
-    document.getElementById("status");
+  return new Promise(function(resolve, reject) {
 
-  status.innerText = mensagem;
+    const callbackName =
+      'callback_' +
+      Date.now() +
+      '_' +
+      Math.floor(Math.random() * 100000);
 
-  status.className =
-    "status " + classe;
 
-}
+    const script =
+      document.createElement('script');
 
 
-/*
-==================================================
-INICIAR LEITURA
-==================================================
-*/
+    const query =
+      new URLSearchParams();
 
-async function iniciarLeitura() {
 
-  const botao =
-    document.getElementById("btnIniciar");
+    query.append('action', acao);
 
-  const reader =
-    document.getElementById("reader");
+    query.append('callback', callbackName);
 
-  const parar =
-    document.getElementById("btnParar");
 
+    Object.keys(parametros).forEach(function(chave) {
 
-  /*
-  Verifica HTTPS
-  */
+      query.append(
+        chave,
+        parametros[chave] ?? ''
+      );
 
-  if (!window.isSecureContext) {
+    });
 
-    mostrarStatus(
-      "❌ Esta página precisa estar em HTTPS.",
-      "erro"
-    );
 
-    return;
+    const timeout =
+      setTimeout(function() {
 
-  }
+        limpar();
 
-
-  /*
-  Verifica suporte à câmera
-  */
-
-  if (
-    !navigator.mediaDevices ||
-    !navigator.mediaDevices.getUserMedia
-  ) {
-
-    mostrarStatus(
-      "❌ Este navegador não permite acesso à câmera.",
-      "erro"
-    );
-
-    return;
-
-  }
-
-
-  /*
-  Mostra mensagem antes da solicitação
-  */
-
-  mostrarStatus(
-    "📷 Solicitando acesso à câmera..."
-  );
-
-
-  /*
-  O MAIS IMPORTANTE:
-  solicita a câmera após o clique
-  */
-
-  try {
-
-    const stream =
-      await navigator.mediaDevices.getUserMedia({
-        video: {
-          facingMode: {
-            ideal: "environment"
-          }
-        }
-      });
-
-
-    /*
-    Fecha imediatamente o teste.
-    A biblioteca abrirá a câmera novamente.
-    */
-
-    stream.getTracks().forEach(
-      track => track.stop()
-    );
-
-
-  } catch (erro) {
-
-    console.error(
-      "Erro ao solicitar câmera:",
-      erro
-    );
-
-
-    mostrarStatus(
-      "❌ A câmera foi bloqueada. Autorize a câmera para este site nas configurações do Chrome.",
-      "erro"
-    );
-
-    return;
-
-  }
-
-
-  /*
-  Exibe área da câmera
-  */
-
-  reader.style.display =
-    "block";
-
-
-  botao.style.display =
-    "none";
-
-
-  parar.style.display =
-    "block";
-
-
-  /*
-  Se já existir leitor,
-  encerra antes.
-  */
-
-  if (leitor) {
-
-    try {
-
-      await leitor.stop();
-
-    } catch (e) {}
-
-    leitor = null;
-
-  }
-
-
-  /*
-  Cria novo leitor
-  */
-
-  leitor =
-    new Html5Qrcode("reader");
-
-
-  const configuracao = {
-
-    fps: 10,
-
-    qrbox: function(
-      viewfinderWidth,
-      viewfinderHeight
-    ) {
-
-      const tamanho =
-        Math.min(
-          viewfinderWidth * 0.75,
-          viewfinderHeight * 0.75
+        reject(
+          new Error(
+            'Tempo limite excedido ao comunicar com o servidor.'
+          )
         );
 
-      return {
+      }, 15000);
 
-        width: tamanho,
 
-        height: tamanho
+    window[callbackName] =
+      function(resultado) {
+
+        clearTimeout(timeout);
+
+        limpar();
+
+        resolve(resultado);
 
       };
 
-    },
 
-    aspectRatio: 1.0,
+    function limpar() {
 
-    rememberLastUsedCamera: true
+      try {
 
-  };
+        delete window[callbackName];
 
+      } catch(e) {}
 
-  /*
-  Inicia câmera traseira
-  */
+      if (script.parentNode) {
 
-  try {
-
-    await leitor.start(
-
-      {
-        facingMode: "environment"
-      },
-
-      configuracao,
-
-      qrCodeEncontrado,
-
-      function(errorMessage) {
-
-        /*
-        Erros durante a procura
-        são normais e não serão exibidos.
-        */
+        script.parentNode.removeChild(script);
 
       }
 
-    );
-
-
-    lendo = true;
-
-
-    mostrarStatus(
-      "📷 Câmera ativa. Aponte para o QR Code."
-    );
-
-
-  } catch (erro) {
-
-    console.error(
-      "Erro ao iniciar leitor:",
-      erro
-    );
-
-
-    mostrarStatus(
-      "❌ Não foi possível iniciar a câmera. Verifique a permissão do site.",
-      "erro"
-    );
-
-
-    reader.style.display =
-      "none";
-
-
-    botao.style.display =
-      "block";
-
-
-    parar.style.display =
-      "none";
-
-  }
-
-}
-
-
-/*
-==================================================
-QR CODE ENCONTRADO
-==================================================
-*/
-
-function qrCodeEncontrado(decodedText) {
-
-  if (!decodedText) {
-
-    return;
-
-  }
-
-
-  if (!lendo) {
-
-    return;
-
-  }
-
-
-  lendo = false;
-
-
-  mostrarStatus(
-    "✅ QR Code identificado! Processando...",
-    "sucesso"
-  );
-
-
-  processarSKU(decodedText);
-
-}
-
-
-/*
-==================================================
-PROCESSAR SKU
-==================================================
-*/
-
-async function processarSKU(valor) {
-
-  let sku =
-    String(valor).trim();
-
-
-  /*
-  Caso QR tenha |
-  */
-
-  if (sku.includes("|")) {
-
-    sku =
-      sku.split("|")[0].trim();
-
-  }
-
-
-  /*
-  Caso QR tenha ;
-  */
-
-  if (sku.includes(";")) {
-
-    sku =
-      sku.split(";")[0].trim();
-
-  }
-
-
-  sku =
-    sku.trim();
-
-
-  /*
-  Verifica SKU
-  */
-
-  if (!sku) {
-
-    mostrarStatus(
-      "❌ QR Code vazio ou inválido.",
-      "erro"
-    );
-
-    lendo = false;
-
-    return;
-
-  }
-
-
-  /*
-  Mostra SKU
-  */
-
-  document.getElementById(
-    "skuLido"
-  ).innerText = sku;
-
-
-  document.getElementById(
-    "resultado"
-  ).style.display =
-    "block";
-
-
-  mostrarStatus(
-    "✅ QR Code lido! Abrindo Controle de Estoque...",
-    "sucesso"
-  );
-
-
-  /*
-  Para câmera
-  */
-
-  await pararLeitura();
-
-
-  /*
-  Monta URL
-  */
-
-  const destino =
-    URL_SISTEMA +
-    "?sku=" +
-    encodeURIComponent(sku);
-
-
-  /*
-  Aguarda para mostrar resultado
-  */
-
-  setTimeout(function() {
-
-    window.location.href =
-      destino;
-
-  }, 700);
-
-}
-
-
-/*
-==================================================
-PARAR CÂMERA
-==================================================
-*/
-
-async function pararLeitura() {
-
-  lendo = false;
-
-
-  if (leitor) {
-
-    try {
-
-      await leitor.stop();
-
-    } catch (erro) {
-
-      console.log(
-        "Câmera já estava parada."
-      );
-
     }
 
 
-    try {
+    script.onerror =
+      function() {
 
-      leitor.clear();
+        clearTimeout(timeout);
 
-    } catch (erro) {}
+        limpar();
 
-    leitor = null;
+        reject(
+          new Error(
+            'Não foi possível conectar ao Apps Script.'
+          )
+        );
 
-  }
-
-
-  document.getElementById(
-    "reader"
-  ).style.display =
-    "none";
-
-
-  document.getElementById(
-    "btnIniciar"
-  ).style.display =
-    "block";
+      };
 
 
-  document.getElementById(
-    "btnParar"
-  ).style.display =
-    "none";
+    script.src =
+      API_URL +
+      '?' +
+      query.toString();
+
+
+    document.body.appendChild(script);
+
+  });
 
 }
 
 
-/*
-==================================================
-VERIFICAÇÃO INICIAL
-==================================================
-*/
+/* ============================================================
+   CÂMERA / QR CODE
+============================================================ */
 
-window.addEventListener(
-  "load",
-  function() {
+async function abrirCamera() {
 
-    if (!window.isSecureContext) {
+  const reader =
+    document.getElementById('reader');
 
-      mostrarStatus(
-        "❌ Esta página precisa ser aberta em HTTPS.",
-        "erro"
-      );
+  const status =
+    document.getElementById('statusCamera');
 
-      return;
+  const btnFechar =
+    document.getElementById('btnFecharCamera');
 
-    }
+
+  if (!reader) {
+
+    alert(
+      'Área do leitor QR não encontrada.'
+    );
+
+    return;
+
+  }
+
+
+  if (
+    typeof Html5Qrcode ===
+    'undefined'
+  ) {
+
+    alert(
+      'Biblioteca do QR Code não carregada.'
+    );
+
+    return;
+
+  }
+
+
+  try {
+
+    await fecharCamera(false);
+
+
+    reader.innerHTML = '';
+
+    status.innerText =
+      'Solicitando acesso à câmera...';
 
 
     if (
@@ -808,9 +574,605 @@ window.addEventListener(
       !navigator.mediaDevices.getUserMedia
     ) {
 
-      mostrarStatus(
-        "❌ Este navegador não oferece acesso à câmera.",
-        "erro"
+      throw new Error(
+        'Este navegador não permite acesso à câmera. Verifique se o site está sendo aberto por HTTPS.'
+      );
+
+    }
+
+
+    /* Solicita explicitamente a câmera */
+
+    const stream =
+      await navigator.mediaDevices.getUserMedia({
+
+        video: {
+
+          facingMode: {
+            ideal: 'environment'
+          }
+
+        },
+
+        audio: false
+
+      });
+
+
+    stream
+      .getTracks()
+      .forEach(function(track) {
+
+        track.stop();
+
+      });
+
+
+    status.innerText =
+      'Câmera ativa. Aponte para o QR Code.';
+
+
+    btnFechar.style.display =
+      'block';
+
+
+    scannerQR =
+      new Html5Qrcode('reader');
+
+
+    const config = {
+
+      fps: 10,
+
+      qrbox:
+        function(
+          viewfinderWidth,
+          viewfinderHeight
+        ) {
+
+          const tamanho =
+            Math.min(
+              viewfinderWidth * 0.75,
+              viewfinderHeight * 0.75,
+              300
+            );
+
+
+          return {
+
+            width:
+              Math.floor(tamanho),
+
+            height:
+              Math.floor(tamanho)
+
+          };
+
+        }
+
+    };
+
+
+    await scannerQR.start(
+
+      {
+        facingMode: {
+          exact: 'environment'
+        }
+      },
+
+      config,
+
+
+      async function(decodedText) {
+
+        if (processandoQR)
+          return;
+
+
+        processandoQR = true;
+
+
+        const sku =
+          String(decodedText).trim();
+
+
+        console.log(
+          'QR CODE LIDO:',
+          sku
+        );
+
+
+        document.getElementById(
+          'sku'
+        ).value = sku;
+
+
+        status.innerText =
+          'QR Code lido com sucesso.';
+
+
+        await fecharCamera(false);
+
+
+        await buscarProduto();
+
+
+        setTimeout(function() {
+
+          processandoQR = false;
+
+        }, 1000);
+
+      },
+
+
+      function(errorMessage) {
+
+        /* Erros normais durante a leitura
+           são ignorados. */
+
+      }
+
+    );
+
+
+  } catch(error) {
+
+    console.error(
+      'Erro câmera:',
+      error
+    );
+
+
+    await fecharCamera(false);
+
+
+    if (
+      error.name ===
+      'NotAllowedError'
+    ) {
+
+      alert(
+        'O acesso à câmera foi negado.\n\n' +
+        'Abra as configurações do navegador e permita o acesso à câmera para este site.'
+      );
+
+
+    } else if (
+      error.name ===
+      'NotFoundError'
+    ) {
+
+      alert(
+        'Nenhuma câmera foi encontrada.'
+      );
+
+
+    } else {
+
+      alert(
+        'Não foi possível iniciar a câmera.\n\n' +
+        error.message
+      );
+
+    }
+
+  }
+
+}
+
+
+/* ============================================================
+   FECHAR CÂMERA
+============================================================ */
+
+async function fecharCamera(
+  mostrarStatus = true
+) {
+
+  const reader =
+    document.getElementById(
+      'reader'
+    );
+
+
+  const status =
+    document.getElementById(
+      'statusCamera'
+    );
+
+
+  const btnFechar =
+    document.getElementById(
+      'btnFecharCamera'
+    );
+
+
+  if (scannerQR) {
+
+    try {
+
+      await scannerQR.stop();
+
+    } catch(e) {}
+
+
+    try {
+
+      scannerQR.clear();
+
+    } catch(e) {}
+
+
+    scannerQR = null;
+
+  }
+
+
+  if (reader) {
+
+    reader.innerHTML = '';
+
+  }
+
+
+  if (btnFechar) {
+
+    btnFechar.style.display =
+      'none';
+
+  }
+
+
+  if (
+    mostrarStatus &&
+    status
+  ) {
+
+    status.innerText = '';
+
+  }
+
+}
+
+
+/* ============================================================
+   BUSCAR PRODUTO
+============================================================ */
+
+async function buscarProduto() {
+
+  const campo =
+    document.getElementById(
+      'sku'
+    );
+
+
+  const sku =
+    campo.value.trim();
+
+
+  if (!sku) {
+
+    mostrarMensagem(
+      'Informe ou leia um SKU.',
+      true
+    );
+
+    return;
+
+  }
+
+
+  mostrarMensagem(
+    'Consultando produto...',
+    false
+  );
+
+
+  try {
+
+    const resultado =
+      await chamarAPI(
+        'buscarProduto',
+        {
+          sku: sku
+        }
+      );
+
+
+    if (
+      !resultado ||
+      !resultado.sucesso
+    ) {
+
+      produtoAtual = null;
+
+
+      document.getElementById(
+        'produto'
+      ).innerText =
+        resultado?.mensagem ||
+        'Produto não encontrado.';
+
+
+      document.getElementById(
+        'estoque'
+      ).innerText =
+        'Estoque: -';
+
+
+      mostrarMensagem(
+        resultado?.mensagem ||
+        'Produto não encontrado.',
+        true
+      );
+
+
+      return;
+
+    }
+
+
+    produtoAtual =
+      resultado;
+
+
+    document.getElementById(
+      'produto'
+    ).innerHTML =
+
+      '<strong>SKU:</strong> ' +
+      escaparHTML(resultado.sku) +
+
+      '<br><br>' +
+
+      '<strong>Produto:</strong> ' +
+      escaparHTML(resultado.produto);
+
+
+    await consultarEstoque(
+      resultado.sku
+    );
+
+
+    esconderMensagem();
+
+
+  } catch(error) {
+
+    console.error(error);
+
+
+    produtoAtual = null;
+
+
+    mostrarMensagem(
+      'Erro ao consultar produto:\n' +
+      error.message,
+      true
+    );
+
+  }
+
+}
+
+
+/* ============================================================
+   CONSULTAR ESTOQUE
+============================================================ */
+
+async function consultarEstoque(
+  sku
+) {
+
+  try {
+
+    const resultado =
+      await chamarAPI(
+        'consultarEstoque',
+        {
+          sku: sku
+        }
+      );
+
+
+    if (
+      !resultado ||
+      !resultado.sucesso
+    ) {
+
+      document.getElementById(
+        'estoque'
+      ).innerText =
+        resultado?.mensagem ||
+        'Erro ao consultar estoque.';
+
+
+      return;
+
+    }
+
+
+    document.getElementById(
+      'estoque'
+    ).innerText =
+
+      'Estoque: ' +
+
+      Number(
+        resultado.estoque
+      ).toLocaleString(
+        'pt-BR'
+      );
+
+
+  } catch(error) {
+
+    document.getElementById(
+      'estoque'
+    ).innerText =
+      'Erro ao consultar estoque.';
+
+
+    console.error(error);
+
+  }
+
+}
+
+
+/* ============================================================
+   REGISTRAR MOVIMENTAÇÃO
+============================================================ */
+
+async function registrar() {
+
+  if (!produtoAtual) {
+
+    mostrarMensagem(
+      'Primeiro leia ou informe um SKU válido.',
+      true
+    );
+
+    return;
+
+  }
+
+
+  const tipo =
+    document.getElementById(
+      'tipo'
+    ).value;
+
+
+  const quantidade =
+    Number(
+      document.getElementById(
+        'quantidade'
+      ).value
+    );
+
+
+  const operador =
+    document.getElementById(
+      'operador'
+    ).value.trim();
+
+
+  const observacao =
+    document.getElementById(
+      'observacao'
+    ).value.trim();
+
+
+  const dispositivo =
+    navigator.userAgent;
+
+
+  if (!tipo) {
+
+    mostrarMensagem(
+      'Selecione ENTRADA ou SAÍDA.',
+      true
+    );
+
+    return;
+
+  }
+
+
+  if (
+    !quantidade ||
+    quantidade <= 0
+  ) {
+
+    mostrarMensagem(
+      'Informe uma quantidade válida.',
+      true
+    );
+
+    return;
+
+  }
+
+
+  if (
+    !Number.isInteger(
+      quantidade
+    )
+  ) {
+
+    mostrarMensagem(
+      'A quantidade deve ser um número inteiro.',
+      true
+    );
+
+    return;
+
+  }
+
+
+  if (!operador) {
+
+    mostrarMensagem(
+      'Informe o operador.',
+      true
+    );
+
+    return;
+
+  }
+
+
+  mostrarMensagem(
+    'Registrando movimentação...',
+    false
+  );
+
+
+  try {
+
+    const resultado =
+      await chamarAPI(
+
+        'registrarMovimentacao',
+
+        {
+
+          sku:
+            produtoAtual.sku,
+
+          tipo:
+            tipo,
+
+          quantidade:
+            quantidade,
+
+          operador:
+            operador,
+
+          dispositivo:
+            dispositivo,
+
+          observacao:
+            observacao
+
+        }
+
+      );
+
+
+    if (
+      !resultado ||
+      !resultado.sucesso
+    ) {
+
+      mostrarMensagem(
+        resultado?.mensagem ||
+        'Erro ao registrar movimentação.',
+        true
       );
 
       return;
@@ -818,12 +1180,150 @@ window.addEventListener(
     }
 
 
-    mostrarStatus(
-      "📷 Clique em 'LER QR CODE' para iniciar a câmera."
+    mostrarMensagem(
+
+      'MOVIMENTAÇÃO REGISTRADA!\n\n' +
+
+      'Produto: ' +
+      resultado.produto +
+
+      '\nSKU: ' +
+      resultado.sku +
+
+      '\nTipo: ' +
+      resultado.tipo +
+
+      '\nQuantidade: ' +
+      resultado.quantidade +
+
+      '\n\nEstoque atual: ' +
+      resultado.estoqueNovo,
+
+      false
+
+    );
+
+
+    document.getElementById(
+      'quantidade'
+    ).value = '';
+
+
+    document.getElementById(
+      'tipo'
+    ).value = '';
+
+
+    document.getElementById(
+      'observacao'
+    ).value = '';
+
+
+    await consultarEstoque(
+      resultado.sku
+    );
+
+
+  } catch(error) {
+
+    mostrarMensagem(
+
+      'Erro ao registrar movimentação:\n' +
+      error.message,
+
+      true
+
     );
 
   }
-);
+
+}
+
+
+/* ============================================================
+   MENSAGENS
+============================================================ */
+
+function mostrarMensagem(
+  texto,
+  erro
+) {
+
+  const elemento =
+    document.getElementById(
+      'mensagem'
+    );
+
+
+  elemento.style.display =
+    'block';
+
+
+  elemento.innerText =
+    texto;
+
+
+  elemento.className =
+    'mensagem ' +
+    (erro
+      ? 'erro'
+      : 'sucesso');
+
+}
+
+
+function esconderMensagem() {
+
+  const elemento =
+    document.getElementById(
+      'mensagem'
+    );
+
+
+  elemento.style.display =
+    'none';
+
+}
+
+
+/* ============================================================
+   SEGURANÇA HTML
+============================================================ */
+
+function escaparHTML(valor) {
+
+  return String(
+    valor == null
+      ? ''
+      : valor
+  )
+
+  .replace(
+    /&/g,
+    '&amp;'
+  )
+
+  .replace(
+    /</g,
+    '&lt;'
+  )
+
+  .replace(
+    />/g,
+    '&gt;'
+  )
+
+  .replace(
+    /"/g,
+    '&quot;'
+  )
+
+  .replace(
+    /'/g,
+    '&#039;'
+  );
+
+}
 
 </script>
 
